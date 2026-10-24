@@ -1,9 +1,9 @@
 /**
  * @runAt idle
- * @name SpotifyEnhance
+ * @name SpotifyEnhanceV2
  * @description All in one better spotify-discord experience.
  * @version 1.1.20
- * @author Skamt
+ * @author Skamt-VioletSnow
  * @website https://github.com/Skamt/BDAddons/tree/main/SpotifyEnhance
  * @source https://raw.githubusercontent.com/Skamt/BDAddons/main/SpotifyEnhance/SpotifyEnhance.plugin.js
  */
@@ -11,13 +11,13 @@
 // config:@Config
 var Config_default = {
 	"info": {
-		"name": "SpotifyEnhance",
+		"name": "SpotifyEnhanceV2",
 		"version": "1.1.20",
 		"description": "All in one better spotify-discord experience.",
 		"source": "https://raw.githubusercontent.com/Skamt/BDAddons/main/SpotifyEnhance/SpotifyEnhance.plugin.js",
 		"github": "https://github.com/Skamt/BDAddons/tree/main/SpotifyEnhance",
 		"authors": [{
-			"name": "Skamt"
+			"name": "Skamt-VioletSnow"
 		}]
 	},
 	"settings": {
@@ -3124,6 +3124,10 @@ function SettingComponent() {
 		{
 			setting: Settings_default.activityIndicator,
 			description: "Show user's Spotify activity in chat."
+		},
+		{
+			setting: Settings_default.showActivityInline,
+			description: "Show Spotify activity inline."
 		},
 		{
 			setting: Settings_default.playerCompactMode,
