@@ -22,6 +22,7 @@ var Config_default = {
 	},
 	"settings": {
 		"spotifyEmbed": "REPLACE",
+		"showActivityInline": true,
 		"activityIndicator": true,
 		"enableListenAlong": true,
 		"playerBannerBackground": true,
@@ -132,7 +133,41 @@ StylesLoader_default.push(`:root {
 
 [class^="threadMessageAccessory"] .spotifyActivityIndicatorIcon {
 	margin: 0 0.25rem 0 0.25rem;
-}`);
+}
+
+
+/* Spotify Activity Badge Styles */
+
+.spotifyActivityBadge {
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
+	margin-left: 6px;
+	padding: 1px 6px;
+	border-radius: 4px;
+	background: rgba(30, 215, 96, 0.15);
+	color: #1ed760;
+	font-size: 11px;
+	font-weight: 600;
+	line-height: 16px;
+	vertical-align: middle;
+	max-width: 260px;
+}
+
+.spotifyActivityBadgeText {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.spotifyActivityBadge svg {
+	flex-shrink: 0;
+}
+
+
+`);
+
+
 
 // common/React.jsx
 var useState = /* @__PURE__ */ (() => BdApi.React.useState)();
@@ -1305,6 +1340,7 @@ var Tooltip_default2 = ({ note, position, children }) => {
 // src/SpotifyEnhance/patches/patchMessageHeader.jsx
 function SpotifyActivityIndicator({ userId }) {
 	const activityIndicator = Settings_default.activityIndicator();
+	const showActivityInline = Settings_default.showActivityInline();
 	const spotifyActivity = useStateFromStores_default(
 		[PresenceStore_default],
 		() => PresenceStore_default.getActivities(userId).find(
@@ -1312,7 +1348,23 @@ function SpotifyActivityIndicator({ userId }) {
 		)
 	);
 	if (!activityIndicator || !spotifyActivity) return null;
-	return /* @__PURE__ */ React_default.createElement(Tooltip_default2, { note: `${spotifyActivity.details} - ${spotifyActivity.state}` }, /* @__PURE__ */ React_default.createElement(SpotifyIcon, { width: "20", height: "20", class: "spotifyActivityIndicatorIcon" }));
+	const text = `${spotifyActivity.details} - ${spotifyActivity.state}`;
+
+
+	if(showActivityInline) {
+		return React_default.createElement(
+		"span",
+		{ className: "spotifyActivityBadge", title: text },
+		React_default.createElement(SpotifyIcon, { width: "14", height: "14", className: "spotifyActivityIndicatorIcon" }),
+		React_default.createElement("span", { className: "spotifyActivityBadgeText" }, text)
+		);
+	} else {
+		 return /* @__PURE__ */ React_default.createElement(Tooltip_default2, { note: text }, // Creates tooltip with hover effect
+				/* @__PURE__ */ React_default.createElement(SpotifyIcon, { width: "20", height: "20", class: "spotifyActivityIndicatorIcon" })); // Creates the Spotify activity icon within the tooltip
+	}
+
+
+
 }
 Plugin_default.onStart(() => {
 	lazy(Filters.byStrings("userOverride", "withMentionPrefix"), { searchExports: false }).then(
