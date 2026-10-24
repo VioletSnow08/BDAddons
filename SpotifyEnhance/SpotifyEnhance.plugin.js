@@ -147,7 +147,7 @@ StylesLoader_default.push(`:root {
 	border-radius: 4px;
 	background: rgba(30, 215, 96, 0.15);
 	color: #1ed760;
-	font-size: 11px;
+	font-size: 13px;
 	font-weight: 600;
 	line-height: 16px;
 	vertical-align: middle;
